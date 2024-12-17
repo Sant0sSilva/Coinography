@@ -1,0 +1,1 @@
+// building card to hold coin info on main page
