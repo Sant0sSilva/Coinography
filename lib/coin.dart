@@ -19,5 +19,5 @@ class Coin {
   final double
       coin24H; // displays price change in percentage over the last day.
   final double
-      holdings; // how much currency to buy coins(might be same as entryPrice)
+      holdings; // how much in dollars
 }

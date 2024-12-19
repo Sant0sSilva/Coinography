@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'coin.dart';
-import 'coin_item.dart';
+import 'coin_card.dart';
 
 class CoinsList extends StatelessWidget {
-  const CoinsList({super.key, required this.coins, });
+  const CoinsList({
+    super.key,
+    required this.coins,
+  });
 
   final List<Coin> coins;
   // final void Function(Coin coin) onRemoveCoin;
@@ -12,7 +15,9 @@ class CoinsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: coins.length,
-      itemBuilder: (ctx, index) => CoinItem(coins[index],),
+      itemBuilder: (ctx, index) => CoinItem(
+        coins[index],
+      ),
     );
   }
 }
