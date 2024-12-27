@@ -1,3 +1,4 @@
+import 'package:coinography/new_coin.dart';
 import 'package:flutter/material.dart';
 import 'coin.dart';
 import 'coins_list.dart';
@@ -27,6 +28,10 @@ class _CoinsState extends State<Coins> {
         holdings: 18308),
   ];
 
+  void _openAddCoinOverlay() {
+    showModalBottomSheet(context: context, builder: (ctx) => NewCoin());
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget mainContent = const Center(
@@ -35,7 +40,12 @@ class _CoinsState extends State<Coins> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Coinographic portfolio tracker'),
+        title: const Text(
+            'Coinographic portfolio tracker'),
+        actions: [
+          IconButton(onPressed: _openAddCoinOverlay,
+              icon: const Icon(Icons.add))
+        ],
       ),
       body: Column(
         children: [
