@@ -25,13 +25,13 @@ class CoinItem extends StatelessWidget {
             const SizedBox(height: 4,),
             Row(
               children: [
-                Text('\$${coin.holdings.toStringAsFixed(2)}',),
+                Text('\$${coin.amountUSD.toStringAsFixed(2)}',),
                 const Spacer(),
                 Row(
                   children: [
-                    Text('\$${coin.coinPrice.toStringAsFixed(2)}  ',),
+                    Text('\$${coin.tokenAmount.toStringAsFixed(2)}  ',),
                     // const Spacer(),
-                    Text('${coin.coin24H.toStringAsFixed(2)}%'),
+                    // Text('${coin.coin24H.toStringAsFixed(2)}%'),
 
                   ],
                 )

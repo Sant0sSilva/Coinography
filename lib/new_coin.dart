@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'coin.dart';
 
 class NewCoin extends StatefulWidget {
-  const NewCoin({super.key});
+  const NewCoin({super.key, required this.onAddNewCoin});
+
+  final void Function(Coin coin) onAddNewCoin;
 
   @override
   State<NewCoin> createState() {
@@ -12,17 +15,45 @@ class NewCoin extends StatefulWidget {
 class _NewCoin extends State<NewCoin> {
   final _coinTitleController = TextEditingController();
   final _amountController = TextEditingController();
+  final _tokenAmount = TextEditingController();
+
+  void _submitCoinData() {
+    final enteredAmount = double.tryParse(_amountController.text);
+    final enteredToken = double.tryParse(_tokenAmount.text);
+
+    final amountAndTokenIsInvalid = enteredAmount == null ||
+        enteredAmount <= 0 ||
+        enteredToken == null ||
+        enteredToken <= 0;
+
+    if (_coinTitleController.text.trim().isEmpty || amountAndTokenIsInvalid) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Invalid input!'),
+          content:
+              const Text('Please enter a valid Title, amount and tokens bought'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child:const Text('Close'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+    widget.onAddNewCoin(Coin(coinTitle: _coinTitleController.text, amountUSD: enteredAmount, tokenAmount: enteredToken),);
+  }
 
   @override
   void dispose() {
     _coinTitleController.dispose();
+    _amountController.dispose();
+    _tokenAmount.dispose();
     super.dispose();
-  }
-
-  var _enteredCoinTitle = '';
-
-  void _saveCoinTitle(String inputValue) {
-    _enteredCoinTitle = inputValue;
   }
 
   @override
@@ -31,19 +62,57 @@ class _NewCoin extends State<NewCoin> {
       padding: const EdgeInsets.all(35),
       child: Column(
         children: [
-          TextField(
-            controller: _coinTitleController,
-            maxLength: 50,
-            decoration: const InputDecoration(
-              label: Text('Coin'),
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _coinTitleController,
+                  decoration: const InputDecoration(
+                    label: Text('Coin'),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 50,
+              ),
+              Expanded(
+                child: TextField(
+                  controller: _amountController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    prefixText: '\$ ',
+                    label: Text('Amount(USD)'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
           ),
           Row(
             children: [
-              ElevatedButton(
+              Expanded(
+                child: TextField(
+                  controller: _tokenAmount,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    label: Text('Tokens bought'),
+                  ),
+                ),
+              )
+            ],
+          ),
+          Row(
+            children: [
+              TextButton(
                 onPressed: () {
-                  print(_coinTitleController.text);
+                  Navigator.pop(context);
                 },
+                child: const Text('Cancel'),
+              ),
+              ElevatedButton(
+                onPressed: _submitCoinData,
                 child: const Text('Save coin'),
               ),
             ],

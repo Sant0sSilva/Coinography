@@ -1,7 +1,8 @@
-import 'package:coinography/new_coin.dart';
+import 'new_coin.dart';
 import 'package:flutter/material.dart';
 import 'coin.dart';
 import 'coins_list.dart';
+
 
 class Coins extends StatefulWidget {
   const Coins({super.key});
@@ -16,20 +17,22 @@ class _CoinsState extends State<Coins> {
   final List<Coin> _fakeCoins = [
     Coin(
         coinTitle: 'XRP',
-        entryPrice: 9308,
-        coinPrice: 2.48,
-        coin24H: 3.87,
-        holdings: 9308),
+        amountUSD: 9308,
+        tokenAmount: 2.48),
     Coin(
         coinTitle: 'BTC',
-        entryPrice: 18308,
-        coinPrice: 88000,
-        coin24H: -4.69,
-        holdings: 18308),
+        amountUSD: 18308,
+        tokenAmount: 88000),
   ];
 
   void _openAddCoinOverlay() {
-    showModalBottomSheet(context: context, builder: (ctx) => NewCoin());
+    showModalBottomSheet(context: context, builder: (ctx) => NewCoin(onAddNewCoin: _addCoin),);
+  }
+
+  void _addCoin(Coin coin){
+    setState(() {
+      _fakeCoins.add(coin);
+    });
   }
 
   @override
