@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'coin.dart';
 
-// coinCard must display coinTitle, coinPrice, coin24h, holdings. profit/loss
+// coinCard must display coinTitle, coinPrice, coin24h, holdings, profit/loss.
 
 class CoinItem extends StatelessWidget {
   const CoinItem(this.coin, {super.key});
@@ -11,10 +11,16 @@ class CoinItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: BorderRadius.circular(35.0),
+      splashColor: Colors.blueAccent.withOpacity(0.2),
       onTap: () {
         print('tap tap');
       },
       child: Card(
+        shadowColor: Colors.blueAccent,
+        elevation: 10,
+      shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(35.0),),
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
@@ -22,7 +28,17 @@ class CoinItem extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Text(coin.coinTitle),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'lib/assets/coin_icons/${coin.coinTitle.toLowerCase()}.png',
+                    height: 20,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(coin.coinTitle),
+                ],
+              ),
               const SizedBox(
                 height: 4,
               ),
@@ -45,11 +61,13 @@ class CoinItem extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Text('P/L'),
+                  Text('P/L: 0'),
                   const Spacer(),
-                  Row(children: [
-                    Text('24h'),
-                  ],)
+                  Row(
+                    children: [
+                      Text('24h: 0'),
+                    ],
+                  )
                 ],
               ),
             ],

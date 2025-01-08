@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'coins.dart';
 
-var kColorScheme = ColorScheme.fromSeed(seedColor: Colors.lightBlue);
+var kColorScheme = ColorScheme.fromSeed(seedColor: Colors.blueAccent);
 
 void main() {
 
