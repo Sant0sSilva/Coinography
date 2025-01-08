@@ -17,6 +17,7 @@ class _NewCoin extends State<NewCoin> {
   final _amountController = TextEditingController();
   final _tokenAmount = TextEditingController();
 
+
   void _submitCoinData() {
     final enteredAmount = double.tryParse(_amountController.text);
     final enteredToken = double.tryParse(_tokenAmount.text);
@@ -25,27 +26,32 @@ class _NewCoin extends State<NewCoin> {
         enteredAmount <= 0 ||
         enteredToken == null ||
         enteredToken <= 0;
-
     if (_coinTitleController.text.trim().isEmpty || amountAndTokenIsInvalid) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
           title: const Text('Invalid input!'),
-          content:
-              const Text('Please enter a valid Title, amount and tokens bought'),
+          content: const Text(
+              'Please enter a valid Title, amount and tokens bought'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(ctx);
               },
-              child:const Text('Close'),
+              child: const Text('Close'),
             ),
           ],
         ),
       );
       return;
     }
-    widget.onAddNewCoin(Coin(coinTitle: _coinTitleController.text, amountUSD: enteredAmount, tokenAmount: enteredToken),);
+    widget.onAddNewCoin(
+      Coin(
+          coinTitle: _coinTitleController.text,
+          amountUSD: enteredAmount,
+          tokenAmount: enteredToken),
+    );
+    Navigator.pop(context);
   }
 
   @override
@@ -56,10 +62,11 @@ class _NewCoin extends State<NewCoin> {
     super.dispose();
   }
 
+  //Decorations for add coin modal overlay
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(35),
+      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
       child: Column(
         children: [
           Row(
