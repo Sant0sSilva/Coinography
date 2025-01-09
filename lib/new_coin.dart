@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'coin.dart';
+import 'models/coin.dart';
 
 class NewCoin extends StatefulWidget {
   const NewCoin({super.key, required this.onAddNewCoin});
@@ -8,11 +8,11 @@ class NewCoin extends StatefulWidget {
 
   @override
   State<NewCoin> createState() {
-    return _NewCoin();
+    return _NewCoinState();
   }
 }
 
-class _NewCoin extends State<NewCoin> {
+class _NewCoinState extends State<NewCoin> {
   final _coinTitleController = TextEditingController();
   final _amountController = TextEditingController();
   final _tokenAmount = TextEditingController();

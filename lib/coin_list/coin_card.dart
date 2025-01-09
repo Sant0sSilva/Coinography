@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'coin.dart';
+import '../models/coin.dart';
+import 'package:coinography/coins.dart';
+import 'package:coinography/coin_home.dart';
 
 // coinCard must display coinTitle, coinPrice, coin24h, holdings, profit/loss.
 
@@ -8,19 +10,24 @@ class CoinItem extends StatelessWidget {
 
   final Coin coin;
 
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(35.0),
       splashColor: Colors.blueAccent.withOpacity(0.2),
       onTap: () {
-        print('tap tap');
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => const CoinHome(),
+          ),
+        );
       },
       child: Card(
         shadowColor: Colors.blueAccent,
         elevation: 10,
       shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(35.0),),
+      borderRadius: BorderRadius.circular(30.0),),
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
@@ -78,4 +85,3 @@ class CoinItem extends StatelessWidget {
   }
 }
 
-//something

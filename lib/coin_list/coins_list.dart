@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'coin.dart';
+import '../models/coin.dart';
 import 'coin_card.dart';
-import 'coins.dart';
+import '../coins.dart';
 
 class CoinsList extends StatelessWidget {
   const CoinsList({
@@ -12,6 +12,7 @@ class CoinsList extends StatelessWidget {
 
   final List<Coin> coins;
   final void Function(Coin coin) onRemoveCoin;
+
 
   @override
   Widget build(BuildContext context) {

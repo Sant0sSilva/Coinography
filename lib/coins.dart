@@ -1,7 +1,8 @@
 import 'new_coin.dart';
 import 'package:flutter/material.dart';
-import 'coin.dart';
-import 'coins_list.dart';
+import 'models/coin.dart';
+import 'coin_list/coins_list.dart';
+
 
 class Coins extends StatefulWidget {
   const Coins({super.key});
@@ -13,7 +14,7 @@ class Coins extends StatefulWidget {
 }
 
 class _CoinsState extends State<Coins> {
-  final List<Coin> _fakeCoins = [
+  final List<Coin> _registeredCoins = [
     Coin(coinTitle: 'XRP', amountUSD: 9308, tokenAmount: 2.48),
     Coin(coinTitle: 'BTC', amountUSD: 18308, tokenAmount: 88000),
   ];
@@ -28,15 +29,15 @@ class _CoinsState extends State<Coins> {
 
   void _addCoin(Coin coin) {
     setState(() {
-      _fakeCoins.add(coin);
+      _registeredCoins.add(coin);
     });
   }
 
   void _removeCoin(Coin coin) {
-    final coinIndex = _fakeCoins.indexOf(coin);
+    final coinIndex = _registeredCoins.indexOf(coin);
 
     setState(() {
-      _fakeCoins.remove(coin);
+      _registeredCoins.remove(coin);
     });
     ScaffoldMessenger.of(context).showSnackBar(
        SnackBar(
@@ -44,7 +45,7 @@ class _CoinsState extends State<Coins> {
         content: const Text('Coin deleted'),
         action: SnackBarAction(label: 'Undo', onPressed: () {
           setState(() {
-            _fakeCoins.insert(coinIndex, coin);
+            _registeredCoins.insert(coinIndex, coin);
           });
         },
         ),
@@ -54,16 +55,18 @@ class _CoinsState extends State<Coins> {
 
   @override
   Widget build(BuildContext context) {
-    Widget mainContent = const Center(
+    Widget activeScreen = const Center(
       child: Text('No coins found! Get cracking!'),
     );
 
-    if (_fakeCoins.isNotEmpty) {
-      mainContent = CoinsList(
-        coins: _fakeCoins,
+    if (_registeredCoins.isNotEmpty) {
+      activeScreen = CoinsList(
+        coins: _registeredCoins,
         onRemoveCoin: _removeCoin,
       );
     }
+
+
 
     return Scaffold(
       appBar: AppBar(
@@ -76,7 +79,7 @@ class _CoinsState extends State<Coins> {
       body: Column(
         children: [
           Expanded(
-            child: mainContent,
+            child: activeScreen,
           ),
         ],
       ),
