@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/coin.dart';
-import 'package:coinography/coins.dart';
 import 'package:coinography/coin_home.dart';
 
 // coinCard must display coinTitle, coinPrice, coin24h, holdings, profit/loss.
@@ -19,7 +18,7 @@ class CoinItem extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (ctx) => const CoinHome(),
+            builder: (ctx) => CoinHome(coin: coin),
           ),
         );
       },
@@ -66,10 +65,10 @@ class CoinItem extends StatelessWidget {
                   )
                 ],
               ),
-              Row(
+              const Row(
                 children: [
                   Text('P/L: 0'),
-                  const Spacer(),
+                  Spacer(),
                   Row(
                     children: [
                       Text('24h: 0'),

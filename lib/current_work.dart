@@ -1,4 +1,0 @@
-/*
-create remove coin card
-
- */
