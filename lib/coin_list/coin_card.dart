@@ -9,7 +9,6 @@ class CoinItem extends StatelessWidget {
 
   final UserCoin coin;
 
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -25,8 +24,9 @@ class CoinItem extends StatelessWidget {
       child: Card(
         shadowColor: Colors.blueAccent,
         elevation: 10,
-      shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(30.0),),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
@@ -83,4 +83,3 @@ class CoinItem extends StatelessWidget {
     );
   }
 }
-

@@ -24,12 +24,10 @@ class CoinHome extends StatefulWidget {
 }
 
 class _CoinHomeState extends State<CoinHome> {
-
   CoinAPI? _coinData;
 
-
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _fetchData();
   }
@@ -41,18 +39,57 @@ class _CoinHomeState extends State<CoinHome> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.coin.coinTitle),
+        title: Text(
+          '${widget.coin.coinTitle[0].toUpperCase() + widget.coin.coinTitle.substring(1)}(${_coinData?.symbol.toUpperCase()})',
+        ),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text('${_coinData?.symbol}'),
-          Text('${_coinData?.currentPrice}'),
-          Text('Price'),
+          Container(
+            width: double.infinity,
+            height: 300,
+            child: Card(
+              margin: EdgeInsets.all(16),
+              elevation: 10,
+              shadowColor: Colors.blueAccent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 20,
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Image.network(
+                          _coinData!.image!,
+                          height: 50,
+                          width: 50,
+                          fit: BoxFit.cover,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '${_coinData?.id}',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
