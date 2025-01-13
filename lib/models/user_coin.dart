@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();//Generates unique ID
 
-class Coin {
-  Coin({
+class UserCoin {
+  UserCoin({
     required this.coinTitle,
     required this.amountUSD,
     required this.tokenAmount,

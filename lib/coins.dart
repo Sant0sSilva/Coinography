@@ -1,7 +1,7 @@
-import 'new_coin.dart';
+import 'package:coinography/new_coin.dart';
 import 'package:flutter/material.dart';
-import 'models/coin.dart';
-import 'coin_list/coins_list.dart';
+import 'package:coinography/models/user_coin.dart';
+import 'package:coinography/coin_list/coins_list.dart';
 
 
 class Coins extends StatefulWidget {
@@ -14,26 +14,20 @@ class Coins extends StatefulWidget {
 }
 
 class _CoinsState extends State<Coins> {
-  final List<Coin> _registeredCoins = [
-    Coin(coinTitle: 'XRP', amountUSD: 9308, tokenAmount: 2.48),
-    Coin(coinTitle: 'BTC', amountUSD: 18308, tokenAmount: 88000),
+  final List<UserCoin> _registeredCoins = [
+    UserCoin(coinTitle: 'ripple', amountUSD: 9308, tokenAmount: 2.48),
+    UserCoin(coinTitle: 'bitcoin', amountUSD: 18308, tokenAmount: 88000),
   ];
 
-  void _openAddCoinOverlay() {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (ctx) => NewCoin(onAddNewCoin: _addCoin),
-    );
-  }
 
-  void _addCoin(Coin coin) {
+
+  void _addCoin(UserCoin coin) {
     setState(() {
       _registeredCoins.add(coin);
     });
   }
 
-  void _removeCoin(Coin coin) {
+  void _removeCoin(UserCoin coin) {
     final coinIndex = _registeredCoins.indexOf(coin);
 
     setState(() {
@@ -65,7 +59,13 @@ class _CoinsState extends State<Coins> {
         onRemoveCoin: _removeCoin,
       );
     }
-
+    void _openAddCoinOverlay() {
+      showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (ctx) => NewCoin(onAddNewCoin: _addCoin),
+      );
+    }
 
 
     return Scaffold(

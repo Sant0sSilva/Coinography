@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/coin.dart';
+import 'package:coinography/models/user_coin.dart';
 import 'package:coinography/coin_home.dart';
 
 // coinCard must display coinTitle, coinPrice, coin24h, holdings, profit/loss.
@@ -7,7 +7,7 @@ import 'package:coinography/coin_home.dart';
 class CoinItem extends StatelessWidget {
   const CoinItem(this.coin, {super.key});
 
-  final Coin coin;
+  final UserCoin coin;
 
 
   @override

@@ -36,6 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   uuid: ^4.5.1
+  syncfusion_flutter_charts: ^28.1.38
 
 dev_dependencies:
   flutter_test:
@@ -61,11 +62,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lib/assets/coin_icons/btc.png
+    - lib/assets/coin_icons/bitcoin.png
     - lib/assets/coin_icons/ada.png
     - lib/assets/coin_icons/eth.png
     - lib/assets/coin_icons/sol.png
-    - lib/assets/coin_icons/xrp.png
+    - lib/assets/coin_icons/ripple.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

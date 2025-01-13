@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'models/coin.dart';
+import 'package:coinography/models/user_coin.dart';
 
 class NewCoin extends StatefulWidget {
   const NewCoin({super.key, required this.onAddNewCoin});
 
-  final void Function(Coin coin) onAddNewCoin;
+  final void Function(UserCoin coin) onAddNewCoin;
 
   @override
   State<NewCoin> createState() {
@@ -46,7 +46,7 @@ class _NewCoinState extends State<NewCoin> {
       return;
     }
     widget.onAddNewCoin(
-      Coin(
+      UserCoin(
           coinTitle: _coinTitleController.text,
           amountUSD: enteredAmount,
           tokenAmount: enteredToken),
@@ -75,7 +75,7 @@ class _NewCoinState extends State<NewCoin> {
                 child: TextField(
                   controller: _coinTitleController,
                   decoration: const InputDecoration(
-                    label: Text('Coin'),
+                    label: Text('Coin "ID"'),
                   ),
                 ),
               ),
