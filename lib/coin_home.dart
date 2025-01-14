@@ -42,7 +42,7 @@ class _CoinHomeState extends State<CoinHome> {
         _isLoading = false;
       });
     } catch (e) {
-      print('Error fetching coin data: $e');
+      Text('Error fetching coin data: $e');
       setState(() {
         _isLoading =false;
       });

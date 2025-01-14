@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
 import 'package:coinography/coin_home.dart';
@@ -44,31 +45,36 @@ class _CoinItemState extends State<CoinItem> {
         _isLoading = false;
         _calculateProfitLoss();
       });
+
     } catch (e) {
       Text('error fetching coin data: $e');
       setState(() {
         _isLoading = false;
       });
+
     }
   }
 
-  double profitLossCalculator(double amountUSD, double tokenAmount,
-      double currentPrice) {
+  double profitLossCalculator(
+      double amountUSD, double tokenAmount, double currentPrice) {
     return (amountUSD / tokenAmount) * currentPrice - amountUSD;
   }
 
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return const Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-           Center(
-            child: CircularProgressIndicator(),
-          ),
-        ],
+      return const
+      Center(
+        child: CircularProgressIndicator(),
       );
     }
+
+    if (_coinData == null) {
+      return const Center(
+        child: Text('Failed to load coin data'),
+      );
+    }
+
 
     return InkWell(
       borderRadius: BorderRadius.circular(35.0),
@@ -97,7 +103,7 @@ class _CoinItemState extends State<CoinItem> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.network(
-                    _coinData!.image,
+                    _coinData?.image ?? 'https://placeholder.com/25',
                     height: 25,
                     width: 25,
                     fit: BoxFit.cover,
@@ -112,15 +118,13 @@ class _CoinItemState extends State<CoinItem> {
               Row(
                 children: [
                   Text(
-                    'Holding: \$${(calculatedProfitLoss! +
-                        widget.coin.amountUSD).toStringAsFixed(2)}',
+                    'Holding: \$${(calculatedProfitLoss! + widget.coin.amountUSD).toStringAsFixed(2)}',
                   ),
                   const Spacer(),
                   Row(
                     children: [
                       Text(
-                        'price: \$${_coinData?.currentPrice.toStringAsFixed(
-                            2)}  ',
+                        'price: \$${_coinData?.currentPrice.toStringAsFixed(2)}  ',
                       ),
                       // const Spacer(),
                       // Text('${coin.coin24H.toStringAsFixed(2)}%'),
@@ -138,8 +142,7 @@ class _CoinItemState extends State<CoinItem> {
                     width: 5,
                   ),
                   Text(
-                    '${calculatedProfitLoss?.toStringAsFixed(2) ??
-                        'Calculating...'}',
+                    '${calculatedProfitLoss?.toStringAsFixed(2)}',
                     style: TextStyle(
                       color: (calculatedProfitLoss ?? 0) > 0
                           ? Colors.green
@@ -154,8 +157,7 @@ class _CoinItemState extends State<CoinItem> {
                         width: 5,
                       ),
                       Text(
-                        '${_coinData?.priceChange24Percentage.toStringAsFixed(
-                            2)}%',
+                        '${_coinData?.priceChange24Percentage.toStringAsFixed(2)}%',
                         style: TextStyle(
                             color: (_coinData?.priceChange24Percentage ?? 0) > 0
                                 ? Colors.green
