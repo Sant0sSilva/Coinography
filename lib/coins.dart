@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
 import 'package:coinography/coin_list/coins_list.dart';
 
-
 class Coins extends StatefulWidget {
   const Coins({super.key});
 
@@ -15,11 +14,9 @@ class Coins extends StatefulWidget {
 
 class _CoinsState extends State<Coins> {
   final List<UserCoin> _registeredCoins = [
-    UserCoin(coinTitle: 'ripple', amountUSD: 9308, tokenAmount: 2.48),
-    UserCoin(coinTitle: 'bitcoin', amountUSD: 18308, tokenAmount: 88000),
+    UserCoin(coinTitle: 'ripple', amountUSD: 10000, tokenAmount: 0.59),
+    UserCoin(coinTitle: 'bitcoin', amountUSD: 10000, tokenAmount: 58314.48),
   ];
-
-
 
   void _addCoin(UserCoin coin) {
     setState(() {
@@ -34,14 +31,20 @@ class _CoinsState extends State<Coins> {
       _registeredCoins.remove(coin);
     });
     ScaffoldMessenger.of(context).showSnackBar(
-       SnackBar(
-        duration: const Duration(seconds: 5),
-        content: const Text('Coin deleted'),
-        action: SnackBarAction(label: 'Undo', onPressed: () {
-          setState(() {
-            _registeredCoins.insert(coinIndex, coin);
-          });
-        },
+      SnackBar(
+        duration: const Duration(
+          seconds: 5,
+        ),
+        content: const Text(
+          'Coin deleted',
+        ),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            setState(() {
+              _registeredCoins.insert(coinIndex, coin);
+            });
+          },
         ),
       ),
     );
@@ -66,7 +69,6 @@ class _CoinsState extends State<Coins> {
         builder: (ctx) => NewCoin(onAddNewCoin: _addCoin),
       );
     }
-
 
     return Scaffold(
       appBar: AppBar(

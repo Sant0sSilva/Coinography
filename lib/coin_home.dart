@@ -25,6 +25,8 @@ class CoinHome extends StatefulWidget {
 
 class _CoinHomeState extends State<CoinHome> {
   CoinAPI? _coinData;
+  bool _isLoading = true;
+
 
   @override
   void initState() {
@@ -33,28 +35,47 @@ class _CoinHomeState extends State<CoinHome> {
   }
 
   Future<void> _fetchData() async {
-    final data = await fetchCoinData(widget.coin.coinTitle);
-    setState(() {
-      _coinData = data;
-    });
+    try {
+      final data = await fetchCoinData(widget.coin.coinTitle);
+      setState(() {
+        _coinData = data;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error fetching coin data: $e');
+      setState(() {
+        _isLoading =false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          '${widget.coin.coinTitle[0].toUpperCase() + widget.coin.coinTitle.substring(1)}(${_coinData?.symbol.toUpperCase()})',
+        title: Text( _isLoading ? 'Loading...':
+          '${widget.coin.coinTitle[0].toUpperCase() + widget.coin.coinTitle.substring(1)}(${_coinData?.symbol.toUpperCase() ?? ''})',
         ),
       ),
-      body: Column(
+      body: _isLoading ? const Center(
+        child: CircularProgressIndicator(),
+      )
+      : _coinData == null ? const Center(
+        child: Text('Failed to load data'),
+      )
+      : _buildContent(),
+    );
+    }
+
+      Widget _buildContent() {
+      return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             width: double.infinity,
             height: 300,
             child: Card(
-              margin: EdgeInsets.all(16),
+              margin: const EdgeInsets.all(16),
               elevation: 10,
               shadowColor: Colors.blueAccent,
               shape: RoundedRectangleBorder(
@@ -70,7 +91,7 @@ class _CoinHomeState extends State<CoinHome> {
                     Row(
                       children: [
                         Image.network(
-                          _coinData!.image!,
+                          _coinData!.image,
                           height: 50,
                           width: 50,
                           fit: BoxFit.cover,
@@ -79,9 +100,12 @@ class _CoinHomeState extends State<CoinHome> {
                           width: 5,
                         ),
                         Text(
-                          '${_coinData?.id}',
+                          '${_coinData?.id[0].toUpperCase()}'
+                              '${_coinData?.id.substring(1)}',
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
                         )
                       ],
                     ),
@@ -91,7 +115,6 @@ class _CoinHomeState extends State<CoinHome> {
             ),
           ),
         ],
-      ),
-    );
+      );
   }
 }

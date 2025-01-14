@@ -104,7 +104,7 @@ class _NewCoinState extends State<NewCoin> {
                   controller: _tokenAmount,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                    label: Text('Tokens bought'),
+                    label: Text('Token price'),
                   ),
                 ),
               )

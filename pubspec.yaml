@@ -38,6 +38,7 @@ dependencies:
   uuid: ^4.5.1
   syncfusion_flutter_charts: ^28.1.38
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -65,7 +66,7 @@ flutter:
     - lib/assets/coin_icons/bitcoin.png
     - lib/assets/coin_icons/ada.png
     - lib/assets/coin_icons/eth.png
-    - lib/assets/coin_icons/sol.png
+    - lib/assets/coin_icons/solana.png
     - lib/assets/coin_icons/ripple.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

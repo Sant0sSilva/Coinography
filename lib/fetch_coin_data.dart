@@ -23,7 +23,7 @@ Future<CoinAPI> fetchCoinData(String coinTitle, ) async {
         currentPrice: jsonResponse[0]['current_price'].toDouble(),
         high24: jsonResponse[0]['high_24h'].toDouble(),
         low24: jsonResponse[0]['low_24h'].toDouble(),
-        priceChange24: jsonResponse[0]['price_change_24h'].toDouble(),
+        priceChange24Percentage: jsonResponse[0]['price_change_percentage_24h'].toDouble(),
         marketCap: jsonResponse[0]['market_cap'].toDouble(),
         totalVolume: jsonResponse[0]['total_volume'].toDouble());
 }

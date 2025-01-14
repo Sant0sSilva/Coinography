@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'coins.dart';
 
-var kColorScheme = ColorScheme.fromSeed(seedColor: Colors.blueAccent);
+var kColorScheme = ColorScheme.fromSeed(
+  seedColor: Colors.blueAccent,
+);
 
 void main() {
-
   runApp(
-     MaterialApp(
+    MaterialApp(
       theme: ThemeData().copyWith(
         colorScheme: kColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
