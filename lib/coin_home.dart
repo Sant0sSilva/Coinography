@@ -2,6 +2,7 @@ import 'package:coinography/models/coin_api.dart';
 import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
 import 'package:coinography/api_callers/fetch_coin_data.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /*
 you need to show the title of the coin in the appbar,
@@ -105,6 +106,8 @@ class _CoinHomeState extends State<CoinHome> {
             children: [
               Text(
                 '\$${_coinData?.currentPrice.toStringAsFixed(2)}',
+                style:
+                    GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ],
           ),

@@ -1,14 +1,3 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        // Specify Android Gradle Plugin (AGP) version
-        classpath 'com.android.tools.build:gradle:8.2.1'
-    }
-}
-
 allprojects {
     repositories {
         google()
@@ -17,7 +6,6 @@ allprojects {
 }
 
 rootProject.buildDir = "../build"
-
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
