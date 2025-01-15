@@ -2,8 +2,12 @@ import 'package:coinography/models/coin_api.dart';
 import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
 import 'package:coinography/api_callers/fetch_coin_data.dart';
+<<<<<<< Updated upstream
 import 'package:google_fonts/google_fonts.dart';
 
+=======
+import 'package:fl_chart/fl_chart.dart';
+>>>>>>> Stashed changes
 /*
 you need to show the title of the coin in the appbar,
  - historical price graph.
@@ -67,9 +71,13 @@ class _CoinHomeState extends State<CoinHome> {
             )
           : _coinData == null
               ? const Center(
+<<<<<<< Updated upstream
                   child: Text(
                     'Failed to load data',
                   ),
+=======
+                  child: Text('Failed to load data'),
+>>>>>>> Stashed changes
                 )
               : _buildContent(),
     );
@@ -79,6 +87,7 @@ class _CoinHomeState extends State<CoinHome> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+<<<<<<< Updated upstream
         Row(
           children: [
             Image.network(
@@ -122,7 +131,88 @@ class _CoinHomeState extends State<CoinHome> {
                   color: (_coinData?.priceChange24Percentage ?? 0) > 0
                       ? Colors.green
                       : Colors.red,
+=======
+        Padding(
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 1),
+          child: Row(
+            children: [
+              Image.network(
+                _coinData!.image,
+                height: 50,
+                width: 50,
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                '${_coinData?.id[0].toUpperCase()}'
+                '${_coinData?.id.substring(1)}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+>>>>>>> Stashed changes
                 ),
+              )
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(15, 1, 10, 10),
+          child: Row(
+            children: [
+              Text('${_coinData?.currentPrice}',),
+              const SizedBox(width: 5,),
+              Text('${_coinData?.priceChange24Percentage}',
+                style: TextStyle(color: (_coinData?.priceChange24Percentage ?? 0) > 0 ? Colors.green : Colors.red,),),
+                ],
+          ),
+        ),
+        SizedBox(width: double.infinity, height: 200,
+            child: LineChart(LineChartData(maxY: 60,maxX: 80),),),
+        SizedBox(
+          width: double.infinity,
+          height: 200,
+          child: Card(
+            margin: const EdgeInsets.all(16),
+            elevation: 10,
+            shadowColor: Colors.blueAccent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 20,
+              ),
+              child: Column(
+                children: [
+                  Row(children: [
+                    Text('Market cap rank',),
+                    Spacer(),
+                    Text('#${_coinData?.marketCapRank}',),
+                  ],),
+                  Row(children: [
+                    Text('Market cap',),
+                    Spacer(),
+                    Text('\$${(_coinData!.marketCap / 1000000000).toStringAsFixed(2)}B',),
+                  ],),
+                  Row(children: [
+                    Text('24h Trading volume',),
+                    Spacer(),
+                    Text('\$${(_coinData!.totalVolume / 1000000000).toStringAsFixed(2)}B',),
+                  ],),
+                  Row(children: [
+                    Text('24h high',),
+                    Spacer(),
+                    Text('\$${_coinData?.high24.toStringAsFixed(2)}',),
+                  ],),
+                  Row(children: [
+                    Text('24h low',),
+                    Spacer(),
+                    Text('\$${_coinData?.low24}',),
+                  ],),
+                ],
               ),
             ],
           ),
