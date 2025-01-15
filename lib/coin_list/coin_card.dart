@@ -109,7 +109,7 @@ class _CoinItemState extends State<CoinItem> {
                     fit: BoxFit.cover,
                   ),
                   const SizedBox(width: 8),
-                  Text(widget.coin.coinTitle),
+                  Text(widget.coin.coinTitle[0].toUpperCase() + widget.coin.coinTitle.substring(1).toLowerCase(),),
                 ],
               ),
               const SizedBox(

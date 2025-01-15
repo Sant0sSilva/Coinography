@@ -2,6 +2,7 @@ import 'package:coinography/models/coin_api.dart';
 import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
 import 'package:coinography/api_callers/fetch_coin_data.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /*
 you need to show the title of the coin in the appbar,
@@ -27,7 +28,6 @@ class _CoinHomeState extends State<CoinHome> {
   CoinAPI? _coinData;
   bool _isLoading = true;
 
-
   @override
   void initState() {
     super.initState();
@@ -42,9 +42,11 @@ class _CoinHomeState extends State<CoinHome> {
         _isLoading = false;
       });
     } catch (e) {
-      Text('Error fetching coin data: $e');
+      Text(
+        'Error fetching coin data: $e',
+      );
       setState(() {
-        _isLoading =false;
+        _isLoading = false;
       });
     }
   }
@@ -53,17 +55,23 @@ class _CoinHomeState extends State<CoinHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text( _isLoading ? 'Loading...':
-        '${widget.coin.coinTitle[0].toUpperCase() + widget.coin.coinTitle.substring(1)}(${_coinData?.symbol.toUpperCase() ?? ''})',
+        title: Text(
+          _isLoading
+              ? 'Loading...'
+              : '${widget.coin.coinTitle[0].toUpperCase() + widget.coin.coinTitle.substring(1)}(${_coinData?.symbol.toUpperCase() ?? ''})',
         ),
       ),
-      body: _isLoading ? const Center(
-        child: CircularProgressIndicator(),
-      )
-          : _coinData == null ? const Center(
-        child: Text('Failed to load data'),
-      )
-          : _buildContent(),
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : _coinData == null
+              ? const Center(
+                  child: Text(
+                    'Failed to load data',
+                  ),
+                )
+              : _buildContent(),
     );
   }
 
@@ -73,7 +81,6 @@ class _CoinHomeState extends State<CoinHome> {
       children: [
         Row(
           children: [
-
             Image.network(
               _coinData!.image,
               height: 50,
@@ -85,13 +92,40 @@ class _CoinHomeState extends State<CoinHome> {
             ),
             Text(
               '${_coinData?.id[0].toUpperCase()}'
-                  '${_coinData?.id.substring(1)}',
+              '${_coinData?.id.substring(1)}',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
               ),
             )
           ],
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 10, 10, 1),
+          child: Row(
+            children: [
+              Text(
+                '\$${_coinData?.currentPrice.toStringAsFixed(2)}',
+                style:
+                    GoogleFonts.lato(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 1, 10, 1),
+          child: Row(
+            children: [
+              Text(
+                '${_coinData?.priceChange24Percentage}% ',
+                style: TextStyle(
+                  color: (_coinData?.priceChange24Percentage ?? 0) > 0
+                      ? Colors.green
+                      : Colors.red,
+                ),
+              ),
+            ],
+          ),
         ),
         SizedBox(
           width: double.infinity,
@@ -112,40 +146,60 @@ class _CoinHomeState extends State<CoinHome> {
                 children: [
                   Row(
                     children: [
-                      const Text('Market cap rank'),
+                      const Text(
+                        'Market cap rank',
+                      ),
                       const Spacer(),
-                      Text('#${_coinData?.marketCapRank.toString()}'),
+                      Text(
+                        '#${_coinData?.marketCapRank.toString()}',
+                      ),
                     ],
                   ),
                   Row(
                     children: [
-                      const Text('Market cap'),
+                      const Text(
+                        'Market cap',
+                      ),
                       const Spacer(),
-                      Text('\$${(_coinData!.marketCap / 1000000000).toStringAsFixed(2)}B'),//make dynamic
+                      Text(
+                        '\$${(_coinData!.marketCap / 1000000000).toStringAsFixed(2)}B',
+                      ), //make dynamic
                     ],
                   ),
                   Row(
                     children: [
-                      const Text('24h Trading volume'),
+                      const Text(
+                        '24h Trading volume',
+                      ),
                       const Spacer(),
-                      Text('\$${(_coinData!.totalVolume / 1000000000).toStringAsFixed(2)}B', style: TextStyle(fontStyle: ),),//make dynamic
+                      Text(
+                        '\$${(_coinData!.totalVolume / 1000000000).toStringAsFixed(2)}B',
+                        style: TextStyle(),
+                      ), //make dynamic
                     ],
                   ),
                   Row(
                     children: [
-                      const Text('24h high'),
+                      const Text(
+                        '24h high',
+                      ),
                       const Spacer(),
-                      Text('\$${_coinData?.high24}'),//make dynamic
+                      Text(
+                        '\$${_coinData?.high24}',
+                      ), //make dynamic
                     ],
                   ),
                   Row(
                     children: [
-                      const Text('24h Low'),
+                      const Text(
+                        '24h Low',
+                      ),
                       const Spacer(),
-                      Text('\$${_coinData?.low24}'),//make dynamic
+                      Text(
+                        '\$${_coinData?.low24}',
+                      ), //make dynamic
                     ],
                   ),
-
                 ],
               ),
             ),
