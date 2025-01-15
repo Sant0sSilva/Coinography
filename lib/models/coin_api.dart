@@ -8,7 +8,9 @@ class CoinAPI {
       required this.low24,
       required this.priceChange24Percentage,
       required this.marketCap,
-      required this.totalVolume});
+      required this.totalVolume,
+      required this.marketCapRank,
+      });
 
   final String id;
   final String symbol;
@@ -19,7 +21,7 @@ class CoinAPI {
   final double priceChange24Percentage;
   final double marketCap;
   final double totalVolume;
-
+  final int? marketCapRank;
 }
 
 /*

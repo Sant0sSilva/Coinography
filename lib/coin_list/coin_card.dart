@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
 import 'package:coinography/coin_home.dart';
 import 'package:coinography/models/coin_api.dart';
-import 'package:coinography/fetch_coin_data.dart';
+import 'package:coinography/api_callers/fetch_coin_data.dart';
 
 class CoinItem extends StatefulWidget {
   const CoinItem(this.coin, {super.key});
