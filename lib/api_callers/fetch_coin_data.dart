@@ -27,9 +27,5 @@ Future<CoinAPI> fetchCoinData(String coinTitle, ) async {
         marketCap: jsonResponse[0]['market_cap'].toDouble(),
         totalVolume: jsonResponse[0]['total_volume'].toDouble(),
         marketCapRank: jsonResponse[0]['market_cap_rank'] as int,
-<<<<<<< Updated upstream
     );
-=======
-        );
->>>>>>> Stashed changes
 }
