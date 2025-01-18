@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
 import 'package:coinography/coin_list/coins_list.dart';
 
+///This object manages the state of the main page and coin cards
+
 class Coins extends StatefulWidget {
   const Coins({super.key});
 

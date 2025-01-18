@@ -1,3 +1,5 @@
+///this object is used to capture data from fetch_coin_data.
+
 class CoinAPI {
 
   CoinAPI({

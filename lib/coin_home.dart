@@ -4,13 +4,7 @@ import 'package:coinography/models/user_coin.dart';
 import 'package:coinography/api_callers/fetch_coin_data.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-/*
-You need to show the title of the coin in the appbar,
- - historical price graph.
- - information on the users' holdings (price, how much their holdings are worth, and price changes).
- - Alert for price target.
- - ROI calculator
- */
+/// Displays coin information and stats after coin card is pressed
 
 class CoinHome extends StatefulWidget {
   const CoinHome({super.key, required this.coin});
@@ -48,6 +42,8 @@ class _CoinHomeState extends State<CoinHome> {
   }
 
   @override
+
+  ///APP BAR Title. ////////////////////////////////////////
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -59,13 +55,13 @@ class _CoinHomeState extends State<CoinHome> {
       ),
       body: _isLoading
           ? const Center(
-        child: CircularProgressIndicator(),
-      )
+              child: CircularProgressIndicator(),
+            )
           : _coinData == null
-          ? const Center(
-        child: Text('Failed to load data'),
-      )
-          : _buildContent(),
+              ? const Center(
+                  child: Text('Failed to load data'),
+                )
+              : _buildContent(),
     );
   }
 
@@ -74,6 +70,7 @@ class _CoinHomeState extends State<CoinHome> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(
+          /// Header and image /////////////////////////
           children: [
             Image.network(
               _coinData!.image,
@@ -83,36 +80,43 @@ class _CoinHomeState extends State<CoinHome> {
             ),
             const SizedBox(width: 5),
             Text(
+              /// Header  /////
               '${_coinData?.id[0].toUpperCase()}${_coinData?.id.substring(1)}',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
             )
           ],
         ),
+
+        /// Current price and 24 change in percent ////
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 10, 1),
           child: Row(
             children: [
               Text(
+                /// current price.
                 '\$${_coinData?.currentPrice.toStringAsFixed(2)}',
               ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 1, 10, 1),
-          child: Row(
-            children: [
-              Text(
-                '${_coinData?.priceChange24Percentage}% ',
-                style: TextStyle(
-                  color: (_coinData?.priceChange24Percentage ?? 0) > 0
-                      ? Colors.green
-                      : Colors.red,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 1, 10, 1),
+                child: Row(
+                  children: [
+                    Text(
+                      /// 24h Change in percent
+                      '${_coinData?.priceChange24Percentage.toStringAsFixed(2)}% ',
+                      style: TextStyle(
+                        color: (_coinData?.priceChange24Percentage ?? 0) > 0
+                            ? Colors.green
+                            : Colors.red,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
+
+        ///Line graph ////////////////////////////////////////////
         SizedBox(
           width: double.infinity,
           height: 200,
@@ -120,6 +124,8 @@ class _CoinHomeState extends State<CoinHome> {
             LineChartData(maxY: 60, maxX: 80),
           ),
         ),
+
+        /// Currency stats card //////////////////////////////7
         SizedBox(
           width: double.infinity,
           height: 200,

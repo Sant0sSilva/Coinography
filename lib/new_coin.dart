@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
 
+///This object manages the add new coin modal and user data input.
+
 class NewCoin extends StatefulWidget {
   const NewCoin({super.key, required this.onAddNewCoin});
 

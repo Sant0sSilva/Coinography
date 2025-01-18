@@ -5,6 +5,8 @@ import 'package:coinography/coin_home.dart';
 import 'package:coinography/models/coin_api.dart';
 import 'package:coinography/api_callers/fetch_coin_data.dart';
 
+///Coin card object
+
 class CoinItem extends StatefulWidget {
   const CoinItem(this.coin, {super.key});
 
@@ -142,7 +144,7 @@ class _CoinItemState extends State<CoinItem> {
                     width: 5,
                   ),
                   Text(
-                    '${calculatedProfitLoss?.toStringAsFixed(2)}',
+                    '\$${calculatedProfitLoss?.toStringAsFixed(2)}',
                     style: TextStyle(
                       color: (calculatedProfitLoss ?? 0) > 0
                           ? Colors.green

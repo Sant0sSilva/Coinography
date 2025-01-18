@@ -3,6 +3,8 @@ import 'package:coinography/models/user_coin.dart';
 import 'package:coinography/coin_list/coin_card.dart';
 
 
+///Displays coin cards added by user to build portfolio.
+///
 class CoinsList extends StatelessWidget {
   const CoinsList({
     super.key,
