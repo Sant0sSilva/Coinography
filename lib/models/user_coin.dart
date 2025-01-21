@@ -2,7 +2,6 @@
 import 'package:uuid/uuid.dart';
 
 ///This object is used to capture user interface from addNewCoin modal.
-
 const uuid = Uuid();//Generates unique ID
 
 class UserCoin {
@@ -17,3 +16,4 @@ class UserCoin {
   final double amountUSD; //x amount of currency exchanged for y amount of coin
   final double tokenAmount; //current Price of coin in usd
 }
+

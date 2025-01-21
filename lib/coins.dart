@@ -1,7 +1,11 @@
-import 'package:coinography/new_coin.dart';
+
+import 'package:coinography/models/coin_api.dart';
+import 'package:coinography/widgets/new_coin.dart';
 import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
-import 'package:coinography/coin_list/coins_list.dart';
+import 'package:coinography/widgets//coin_list/coins_list.dart';
+import 'package:coinography/api_callers/fetch_coin_data.dart';
+
 
 ///This object manages the state of the main page and coin cards
 
@@ -15,15 +19,60 @@ class Coins extends StatefulWidget {
 }
 
 class _CoinsState extends State<Coins> {
+
+
+  Map<String, CoinAPI>? _coinData = {};
+  bool _isLoading = true;
+  double? calculatedProfitLoss;
+
   final List<UserCoin> _registeredCoins = [
     UserCoin(coinTitle: 'ripple', amountUSD: 10000, tokenAmount: 0.59),
     UserCoin(coinTitle: 'bitcoin', amountUSD: 10000, tokenAmount: 58314.48),
   ];
 
-  void _addCoin(UserCoin coin) {
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+  ///Fetch coin data /////////
+  Future<void> _fetchData() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final Map<String, CoinAPI> fetchedData = {};
+
+    try {
+      for (final coin in _registeredCoins) {
+        final data = await fetchCoinData(coin.coinTitle);
+        fetchedData[coin.coinTitle.toLowerCase()] = data;
+      }
+      setState(() {
+        _coinData = fetchedData;
+        _isLoading = false;
+      });
+    } catch (e){
+      Text('Error fetching coin data $e');
+    }
+  }
+/// ///////////////////////////////////////
+  void _addCoin(UserCoin coin) async {
     setState(() {
       _registeredCoins.add(coin);
     });
+    // try {
+    //
+    //   final data = await fetchCoinData(coin.coinTitle);
+    //
+    //   setState(() {
+    //
+    //     _coinData![coin.coinTitle.toLowerCase()] = data;
+    //   });
+    // } catch (e) {
+    //   Text('Error fetching data for new coin: $e');
+    // }
   }
 
   void _removeCoin(UserCoin coin) {
@@ -31,7 +80,9 @@ class _CoinsState extends State<Coins> {
 
     setState(() {
       _registeredCoins.remove(coin);
+      _coinData?.remove(coin.coinTitle);
     });
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(
@@ -46,6 +97,7 @@ class _CoinsState extends State<Coins> {
             setState(() {
               _registeredCoins.insert(coinIndex, coin);
             });
+            _fetchData();
           },
         ),
       ),
@@ -54,6 +106,14 @@ class _CoinsState extends State<Coins> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
     Widget activeScreen = const Center(
       child: Text('No coins found! Get cracking!'),
     );
@@ -61,6 +121,7 @@ class _CoinsState extends State<Coins> {
     if (_registeredCoins.isNotEmpty) {
       activeScreen = CoinsList(
         coins: _registeredCoins,
+        coinData: _coinData!,///TODO: make a null check
         onRemoveCoin: _removeCoin,
       );
     }
