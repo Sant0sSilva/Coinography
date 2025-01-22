@@ -16,13 +16,53 @@ class CoinsList extends StatelessWidget {
   final List<UserCoin> coins;
   final void Function(UserCoin coin) onRemoveCoin;
 
+  /// Calculates the profit or loss
+  double profitLossCalculator({
+    required double amountUSD,
+    required double tokenAmount,
+    required double currentPrice,
+  }) {
+    return (amountUSD / tokenAmount) * currentPrice - amountUSD;
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    /// Calculate holdings ///////////////////////////////
+    final coinList = coins.map((coin) {
+      final CoinAPI? data = coinData[coin.coinTitle.toLowerCase()];
+
+      final double holdings = data != null
+      ? (coin.amountUSD + profitLossCalculator(
+        amountUSD: coin.amountUSD,
+        tokenAmount: coin.tokenAmount,
+        currentPrice: data.currentPrice,
+      )): coin.amountUSD;
+
+      return holdings;
+    }).toList();
+    ///Calculate total holdings ///
+    final double totalHoldings = coinList.reduce((a, b) => a + b);
+
+
     return Column(
       children: [
-        MyPieChart(coins: coins, coinData: coinData,),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Padding(padding: const EdgeInsets.all(8),
+                child: Text('Total: \$${totalHoldings.toStringAsFixed(2)}'),
+              ),
+            ],
+          ),
+        ),
+        MyPieChart(
+          coins: coins,
+          coinData: coinData,
+          totalHoldings: totalHoldings,
+        ),
         Expanded(
-          ///TODO: Conditionally render with futurebuilder //////
           child: ListView.builder(
             itemCount: coins.length,
             itemBuilder: (ctx, index) => Dismissible(
@@ -34,7 +74,9 @@ class CoinsList extends StatelessWidget {
                 coinData,
               ),
               onDismissed: (direction) {
-                onRemoveCoin(coins[index],);
+                onRemoveCoin(
+                  coins[index],
+                );
               },
             ),
           ),

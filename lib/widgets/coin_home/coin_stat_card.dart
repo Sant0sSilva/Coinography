@@ -15,9 +15,10 @@ class CoinStatCard extends StatelessWidget{
       width: double.infinity,
       height: 200,
       child: Card(
+        color: const Color.fromARGB(255, 6, 6, 50),
         margin: const EdgeInsets.all(16),
         elevation: 10,
-        shadowColor: Colors.blueAccent,
+        shadowColor: Colors.lightBlueAccent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),

@@ -2,7 +2,7 @@ import 'package:coinography/models/coin_api.dart';
 import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
 import 'package:coinography/api_callers/fetch_coin_data.dart';
-import 'package:coinography/widgets//coin_home/coin_line_graph.dart';
+import 'package:coinography/charts/coin_line_graph.dart';
 import 'package:coinography/widgets/coin_home/coin_stat_card.dart';
 import 'package:coinography/widgets/coin_home/coin_home_header_price.dart';
 
@@ -44,6 +44,7 @@ class _CoinHomeState extends State<CoinHome> {
   }
 
   @override
+
   ///APP BAR Title. ////////////////////////////////////////
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,8 +56,20 @@ class _CoinHomeState extends State<CoinHome> {
         ),
       ),
       body: _isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
+          ? Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 9, 33, 209),
+                    Color.fromARGB(255, 1, 1, 14),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
             )
           : _coinData == null
               ? const Center(
@@ -67,36 +80,64 @@ class _CoinHomeState extends State<CoinHome> {
   }
 
   Widget _buildContent() {
-    if(_coinData == null){
-      return const Center(child: Text('Failed to load content'),);
+    if (_coinData == null) {
+      return const Center(
+        child: Text('Failed to load content'),
+      );
     }
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Row(
-          /// Header and image /////////////////////////
-          children: [
-            Image.network(
-              _coinData!.image,
-              height: 50,
-              width: 50,
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(width: 5),
-            Text(
-              /// Header  /////
-              '${_coinData?.id[0].toUpperCase()}${_coinData?.id.substring(1)}',
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-            )
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color.fromARGB(255, 2, 13, 87),
+            Color.fromARGB(255, 1, 1, 14),
           ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          //   Color.fromARGB(255, 95, 95, 97),
+          //   Color.fromARGB(255, 0, 3, 11),
+          // ],
+          // begin: Alignment.topCenter,
+          // end: Alignment.bottomCenter,
         ),
-        /// Current price and 24 change in percent ////
-        CoinHomeHeaderPrice(coinData: _coinData),
-        ///Line graph ////////////////////////////////////////////
-        CoinLineGraph(coinData: _coinData),
-        /// Currency stats card //////////////////////////////
-        CoinStatCard(coinData: _coinData),
-      ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              /// Header and image /////////////////////////
+              children: [
+                Image.network(
+                  _coinData!.image,
+                  height: 50,
+                  width: 50,
+                  fit: BoxFit.cover,
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  /// Header  /////
+                  '${_coinData?.id[0].toUpperCase()}${_coinData?.id.substring(1)}',
+                  style:
+                      const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                )
+              ],
+            ),
+          ),
+          /// Current price and 24 change in percent ////
+          CoinHomeHeaderPrice(coinData: _coinData),
+
+          ///Line graph ////////////////////////////////////////////
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 1, 20, 5),
+            child: CoinLineGraph(coinData: _coinData),
+          ),
+
+          /// Currency stats card //////////////////////////////
+          CoinStatCard(coinData: _coinData),
+        ],
+      ),
     );
   }
 }

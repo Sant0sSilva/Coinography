@@ -1,11 +1,9 @@
-
 import 'package:coinography/models/coin_api.dart';
 import 'package:coinography/widgets/new_coin.dart';
 import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
 import 'package:coinography/widgets//coin_list/coins_list.dart';
 import 'package:coinography/api_callers/fetch_coin_data.dart';
-
 
 ///This object manages the state of the main page and coin cards
 
@@ -19,8 +17,6 @@ class Coins extends StatefulWidget {
 }
 
 class _CoinsState extends State<Coins> {
-
-
   Map<String, CoinAPI>? _coinData = {};
   bool _isLoading = true;
   double? calculatedProfitLoss;
@@ -30,49 +26,49 @@ class _CoinsState extends State<Coins> {
     UserCoin(coinTitle: 'bitcoin', amountUSD: 10000, tokenAmount: 58314.48),
   ];
 
-
   @override
   void initState() {
     super.initState();
     _fetchData();
   }
-  ///Fetch coin data /////////
-  Future<void> _fetchData() async {
+
+  ///Fetch coin data //////////////////////////////////
+  Future<void> _fetchData({String? coinTitle}) async {
     setState(() {
       _isLoading = true;
     });
-
-    final Map<String, CoinAPI> fetchedData = {};
-
     try {
-      for (final coin in _registeredCoins) {
-        final data = await fetchCoinData(coin.coinTitle);
-        fetchedData[coin.coinTitle.toLowerCase()] = data;
+      if (coinTitle != null) {
+        final CoinAPI data = await fetchCoinData(coinTitle.toLowerCase());
+
+        setState(() {
+          _coinData?[coinTitle.toLowerCase()] = data;
+          _isLoading = false;
+        });
+      } else {
+        final Map<String, CoinAPI> fetchedData = {};
+        for (final coin in _registeredCoins) {
+          final data = await fetchCoinData(coin.coinTitle);
+          fetchedData[coin.coinTitle.toLowerCase()] = data;
+        }
+        setState(() {
+          _coinData = fetchedData;
+          _isLoading = false;
+        });
       }
-      setState(() {
-        _coinData = fetchedData;
-        _isLoading = false;
-      });
-    } catch (e){
+    } catch (e) {
       Text('Error fetching coin data $e');
     }
   }
-/// ///////////////////////////////////////
+
+  /// ///////////////////////////////////////
   void _addCoin(UserCoin coin) async {
     setState(() {
       _registeredCoins.add(coin);
     });
-    // try {
-    //
-    //   final data = await fetchCoinData(coin.coinTitle);
-    //
-    //   setState(() {
-    //
-    //     _coinData![coin.coinTitle.toLowerCase()] = data;
-    //   });
-    // } catch (e) {
-    //   Text('Error fetching data for new coin: $e');
-    // }
+
+    /// Fetches Data for new coin added otherwise it would return null
+    _fetchData(coinTitle: coin.coinTitle);
   }
 
   void _removeCoin(UserCoin coin) {
@@ -107,9 +103,19 @@ class _CoinsState extends State<Coins> {
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
+      return  Scaffold(
+        body: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 4, 40, 188),
+                  Color.fromARGB(255, 1, 1, 14),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,),),
+          child: const Center(
+            child: CircularProgressIndicator(),
+          ),
         ),
       );
     }
@@ -121,7 +127,9 @@ class _CoinsState extends State<Coins> {
     if (_registeredCoins.isNotEmpty) {
       activeScreen = CoinsList(
         coins: _registeredCoins,
-        coinData: _coinData!,///TODO: make a null check
+        coinData: _coinData!,
+
+        ///TODO: make a null check
         onRemoveCoin: _removeCoin,
       );
     }
@@ -141,12 +149,29 @@ class _CoinsState extends State<Coins> {
               onPressed: _openAddCoinOverlay, icon: const Icon(Icons.add))
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: activeScreen,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 9, 33, 209),
+              Color.fromARGB(255, 1, 1, 14),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            //   Color.fromARGB(255, 95, 95, 97),
+            //   Color.fromARGB(255, 0, 3, 11),
+            // ],
+            // begin: Alignment.topCenter,
+            // end: Alignment.bottomCenter,
           ),
-        ],
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: activeScreen,
+            ),
+          ],
+        ),
       ),
     );
   }

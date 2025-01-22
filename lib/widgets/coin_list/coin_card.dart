@@ -44,8 +44,6 @@ double? calculatedProfitLoss;
 
   @override
   Widget build(BuildContext context) {
-    print('Data for ${widget.coin.coinTitle}: ${widget.coinData[widget.coin.coinTitle]}');
-
     final CoinAPI? data = widget.coinData[widget.coin.coinTitle];
 
     if (data == null) {
@@ -63,7 +61,7 @@ double? calculatedProfitLoss;
 
     return InkWell(
       borderRadius: BorderRadius.circular(35.0),
-      splashColor: Colors.blueAccent.withOpacity(0.2),
+      splashColor: Colors.blueAccent,
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
@@ -72,7 +70,8 @@ double? calculatedProfitLoss;
         );
       },
       child: Card(
-        shadowColor: Colors.blueAccent,
+        color: const Color.fromARGB(255, 6, 6, 50),
+        shadowColor: Colors.lightBlueAccent,
         elevation: 10,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),

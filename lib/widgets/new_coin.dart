@@ -19,6 +19,10 @@ class _NewCoinState extends State<NewCoin> {
   final _amountController = TextEditingController();
   final _tokenAmount = TextEditingController();
 
+  final _coinTitleFocusNode = FocusNode();
+  final _amountFocusNode = FocusNode();
+  final _tokenFocusNode = FocusNode();
+
 
   void _submitCoinData() {
     final enteredAmount = double.tryParse(_amountController.text);
@@ -49,7 +53,7 @@ class _NewCoinState extends State<NewCoin> {
     }
     widget.onAddNewCoin(
       UserCoin(
-          coinTitle: _coinTitleController.text,
+          coinTitle: _coinTitleController.text.toLowerCase(),
           amountUSD: enteredAmount,
           tokenAmount: enteredToken),
     );
@@ -61,72 +65,91 @@ class _NewCoinState extends State<NewCoin> {
     _coinTitleController.dispose();
     _amountController.dispose();
     _tokenAmount.dispose();
+    _coinTitleFocusNode.dispose();
+    _tokenFocusNode.dispose();
+    _amountFocusNode.dispose();
     super.dispose();
   }
 
   //Decorations for add coin modal overlay
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: _coinTitleController,
-                  decoration: const InputDecoration(
-                    label: Text('Coin "ID"'),
+    return Container(
+      color: Colors.black,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _coinTitleController,
+                    focusNode: _coinTitleFocusNode,
+                    decoration: const InputDecoration(
+                      label: Text('Coin "ID"'),
+                    ),
+                    onEditingComplete: (){
+                      FocusScope.of(context).requestFocus(_amountFocusNode);
+                    },
                   ),
                 ),
-              ),
-              const SizedBox(
-                width: 50,
-              ),
-              Expanded(
-                child: TextField(
-                  controller: _amountController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    prefixText: '\$ ',
-                    label: Text('Amount(USD)'),
+                const SizedBox(
+                  width: 50,
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: _amountController,
+                    focusNode: _amountFocusNode,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      prefixText: '\$ ',
+                      label: Text('Amount(USD)'),
+                    ),
+                    onEditingComplete: () {
+                      FocusScope.of(context).requestFocus(_tokenFocusNode);
+                    },
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: _tokenAmount,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    label: Text('Token price'),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _tokenAmount,
+                    focusNode: _tokenFocusNode,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      prefixText: '\$ ',
+                      label: Text('Token price(USD)'),
+                    ),
+                    onEditingComplete: () {
+                      _submitCoinData();
+                    },
                   ),
+                )
+              ],
+            ),
+            Row(
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancel'),
                 ),
-              )
-            ],
-          ),
-          Row(
-            children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Cancel'),
-              ),
-              ElevatedButton(
-                onPressed: _submitCoinData,
-                child: const Text('Save coin'),
-              ),
-            ],
-          )
-        ],
+                ElevatedButton(
+                  onPressed: _submitCoinData,
+                  child: const Text('Save coin'),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
