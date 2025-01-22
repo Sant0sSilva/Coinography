@@ -93,6 +93,8 @@ class CoinsList extends StatelessWidget {
                     itemCount: coins.length + 1,
                     itemBuilder: (ctx, index) {
                       if(index == 0) {
+                        /// there is an invisible sized box as the first element on the scrollable list, so that the
+                        /// list scrolls over pie chart.
                         return const SizedBox(
                           height: 350,
                         );
