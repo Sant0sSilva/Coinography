@@ -48,51 +48,72 @@ class CoinsList extends StatelessWidget {
     ///Calculate total holdings ///
     final double totalHoldings = coinList.reduce((a, b) => a + b);
 
-    return Column(
+    return Stack(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text('Total: \$${totalHoldings.toStringAsFixed(2)}'),
-              ),
-            ],
-          ),
-        ),
-        /// PieChart widget ////
-        MyPieChart(
-          coins: coins,
-          coinData: coinData,
-          totalHoldings: totalHoldings,
-        ),
-        Expanded(
-          ///refresh coin card display
-          child: RefreshIndicator(
-            elevation: 15,
-            edgeOffset: 30,
-            color: const Color.fromARGB(255, 3, 18, 198),
-            backgroundColor: const Color.fromARGB(255, 1, 14, 76),
-            displacement: 60,
-            onRefresh: onRefresh,
-            child: ListView.builder(
-              itemCount: coins.length,
-              itemBuilder: (ctx, index) => Dismissible(
-                key: ValueKey(
-                  coins[index],
-                ),
-                child: CoinCard(
-                  coins[index],
-                  coinData,
-                ),
-                onDismissed: (direction) {
-                  onRemoveCoin(
-                    coins[index],
-                  );
-                },
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Text('Total: \$${totalHoldings.toStringAsFixed(2)}'),
+                  ),
+                ],
               ),
             ),
+
+            /// PieChart widget ////
+            MyPieChart(
+              coins: coins,
+              coinData: coinData,
+              totalHoldings: totalHoldings,
+            ),
+          ],
+        ),
+        
+        Positioned.fill(
+          
+          child: Column(
+            children: [
+              // const SizedBox(height: 350,),
+              
+              ///refresh coin card display
+              Expanded(
+                child: RefreshIndicator(
+                  elevation: 15,
+                  edgeOffset: 30,
+                  color: const Color.fromARGB(255, 3, 18, 198),
+                  backgroundColor: const Color.fromARGB(255, 1, 14, 76),
+                  displacement: 60,
+                  onRefresh: onRefresh,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(0),
+                    itemCount: coins.length + 1,
+                    itemBuilder: (ctx, index) {
+                      if(index == 0) {
+                        return const SizedBox(
+                          height: 350,
+                        );
+                      }
+                      return Dismissible(
+                      key: ValueKey( coins[index - 1],
+                      ),
+                      child: CoinCard(
+                        coins[index - 1],
+                        coinData,
+                      ),
+                      onDismissed: (direction) {
+                        onRemoveCoin(
+                          coins[index],
+                        );
+                      },
+                    );
+                 } ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
