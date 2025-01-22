@@ -14,7 +14,7 @@ class MyPieChart extends StatelessWidget {
   final List<UserCoin> coins;
   final Map<String, CoinAPI> coinData;
 
-  /// Calculates the profit or loss
+  /// Calculates the profit or loss ////////////////
   double profitLossCalculator({
     required double amountUSD,
     required double tokenAmount,
@@ -35,7 +35,7 @@ class MyPieChart extends StatelessWidget {
         tokenAmount: coin.tokenAmount,
         currentPrice: data.currentPrice,
       ))
-          : coin.amountUSD;
+          : coin.amountUSD; /// If null
       
       final double percentage = (totalHoldings! > 0) ? (holdings / totalHoldings!) * 100 : 0.0;
       

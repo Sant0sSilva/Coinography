@@ -28,7 +28,7 @@ class _CoinHomeState extends State<CoinHome> {
     super.initState();
     _fetchData();
   }
-
+/// Fetches additional data than is displayed on coin card
   Future<void> _fetchData() async {
     try {
       final data = await fetchCoinData(widget.coin.coinTitle);
@@ -107,10 +107,10 @@ class _CoinHomeState extends State<CoinHome> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Row(
-              /// Header and image /////////////////////////
+              /// Header and LOGO /////////////////////////
               children: [
                 Image.network(
-                  _coinData!.image,
+                  _coinData!.image, /// image received from API
                   height: 50,
                   width: 50,
                   fit: BoxFit.cover,

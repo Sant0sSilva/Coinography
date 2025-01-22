@@ -1,7 +1,7 @@
 
 import 'package:uuid/uuid.dart';
 
-///This object is used to capture user interface from addNewCoin modal.
+///This object is used to capture user input from addNewCoin modal.
 const uuid = Uuid();//Generates unique ID
 
 class UserCoin {

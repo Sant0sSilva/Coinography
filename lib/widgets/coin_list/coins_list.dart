@@ -61,12 +61,14 @@ class CoinsList extends StatelessWidget {
             ],
           ),
         ),
+        /// PieChart widget ////
         MyPieChart(
           coins: coins,
           coinData: coinData,
           totalHoldings: totalHoldings,
         ),
         Expanded(
+          ///refresh coin card display
           child: RefreshIndicator(
             elevation: 15,
             edgeOffset: 30,

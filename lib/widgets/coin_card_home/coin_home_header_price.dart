@@ -16,6 +16,7 @@ class CoinHomeHeaderPrice extends StatelessWidget{
       child: Row(
         children: [
           Text(
+
             /// current price.
             '\$${coinData?.currentPrice.toStringAsFixed(2)}',
           ),
@@ -24,6 +25,7 @@ class CoinHomeHeaderPrice extends StatelessWidget{
             child: Row(
               children: [
                 Text(
+
                   /// 24h Change in percent
                   '${coinData?.priceChange24Percentage.toStringAsFixed(2)}% ',
                   style: TextStyle(

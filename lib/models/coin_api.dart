@@ -1,7 +1,7 @@
 
 
 class CoinAPI {
-
+/// model to receive API data.
   CoinAPI({
     required this.id,
     required this.symbol,
