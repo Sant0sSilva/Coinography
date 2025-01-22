@@ -128,6 +128,7 @@ class _CoinsState extends State<Coins> {
       activeScreen = CoinsList(
         coins: _registeredCoins,
         coinData: _coinData!,
+        onRefresh: _fetchData,
 
         ///TODO: make a null check
         onRemoveCoin: _removeCoin,

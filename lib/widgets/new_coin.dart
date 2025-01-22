@@ -23,7 +23,6 @@ class _NewCoinState extends State<NewCoin> {
   final _amountFocusNode = FocusNode();
   final _tokenFocusNode = FocusNode();
 
-
   void _submitCoinData() {
     final enteredAmount = double.tryParse(_amountController.text);
     final enteredToken = double.tryParse(_tokenAmount.text);
@@ -36,15 +35,25 @@ class _NewCoinState extends State<NewCoin> {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('Invalid input!'),
+          backgroundColor: Colors.grey.shade700,
+          title: const Text('Invalid input!', style: TextStyle(color: Colors.black),),
           content: const Text(
-              'Please enter a valid Title, amount and tokens bought'),
+            'Please enter a valid Title, amount and tokens bought',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(ctx);
               },
-              child: const Text('Close'),
+              child: const Text(
+                'Close',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
             ),
           ],
         ),
@@ -89,7 +98,7 @@ class _NewCoinState extends State<NewCoin> {
                     decoration: const InputDecoration(
                       label: Text('Coin "ID"'),
                     ),
-                    onEditingComplete: (){
+                    onEditingComplete: () {
                       FocusScope.of(context).requestFocus(_amountFocusNode);
                     },
                   ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
-import 'package:coinography/widgets/coin_home/coin_home.dart';
+import 'package:coinography/widgets/coin_card_home/coin_card_home.dart';
 import 'package:coinography/models/coin_api.dart';
 
 //TODO: make it so you can get a dollar cost per average on adding the same coin.
@@ -165,7 +165,7 @@ double? calculatedProfitLoss;
 /*
 import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
-import 'package:coinography/coin_home/coin_home.dart';
+import 'package:coinography/coin_card_home/coin_card_home.dart';
 import 'package:coinography/models/coin_api.dart';
 import 'package:coinography/api_callers/fetch_coin_data.dart';
 

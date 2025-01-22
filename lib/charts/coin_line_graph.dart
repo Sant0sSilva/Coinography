@@ -10,7 +10,7 @@ class CoinLineGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final spots = [
+    const spots = [
       FlSpot(0, 3.17),
       FlSpot(1, 5.13),
       FlSpot(2, 7.84),

@@ -11,10 +11,12 @@ class CoinsList extends StatelessWidget {
     required this.coins,
     required this.coinData,
     required this.onRemoveCoin,
+    required this.onRefresh,
   });
   final Map<String, CoinAPI> coinData;
   final List<UserCoin> coins;
   final void Function(UserCoin coin) onRemoveCoin;
+  final Future<void> Function() onRefresh;
 
   /// Calculates the profit or loss
   double profitLossCalculator({
@@ -27,23 +29,24 @@ class CoinsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     /// Calculate holdings ///////////////////////////////
     final coinList = coins.map((coin) {
       final CoinAPI? data = coinData[coin.coinTitle.toLowerCase()];
 
       final double holdings = data != null
-      ? (coin.amountUSD + profitLossCalculator(
-        amountUSD: coin.amountUSD,
-        tokenAmount: coin.tokenAmount,
-        currentPrice: data.currentPrice,
-      )): coin.amountUSD;
+          ? (coin.amountUSD +
+              profitLossCalculator(
+                amountUSD: coin.amountUSD,
+                tokenAmount: coin.tokenAmount,
+                currentPrice: data.currentPrice,
+              ))
+          : coin.amountUSD;
 
       return holdings;
     }).toList();
+
     ///Calculate total holdings ///
     final double totalHoldings = coinList.reduce((a, b) => a + b);
-
 
     return Column(
       children: [
@@ -51,7 +54,8 @@ class CoinsList extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              Padding(padding: const EdgeInsets.all(8),
+              Padding(
+                padding: const EdgeInsets.all(8),
                 child: Text('Total: \$${totalHoldings.toStringAsFixed(2)}'),
               ),
             ],
@@ -63,21 +67,29 @@ class CoinsList extends StatelessWidget {
           totalHoldings: totalHoldings,
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: coins.length,
-            itemBuilder: (ctx, index) => Dismissible(
-              key: ValueKey(
-                coins[index],
-              ),
-              child: CoinCard(
-                coins[index],
-                coinData,
-              ),
-              onDismissed: (direction) {
-                onRemoveCoin(
+          child: RefreshIndicator(
+            elevation: 15,
+            edgeOffset: 30,
+            color: const Color.fromARGB(255, 3, 18, 198),
+            backgroundColor: const Color.fromARGB(255, 1, 14, 76),
+            displacement: 60,
+            onRefresh: onRefresh,
+            child: ListView.builder(
+              itemCount: coins.length,
+              itemBuilder: (ctx, index) => Dismissible(
+                key: ValueKey(
                   coins[index],
-                );
-              },
+                ),
+                child: CoinCard(
+                  coins[index],
+                  coinData,
+                ),
+                onDismissed: (direction) {
+                  onRemoveCoin(
+                    coins[index],
+                  );
+                },
+              ),
             ),
           ),
         ),

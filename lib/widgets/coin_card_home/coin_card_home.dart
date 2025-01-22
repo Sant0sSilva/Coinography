@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
 import 'package:coinography/api_callers/fetch_coin_data.dart';
 import 'package:coinography/charts/coin_line_graph.dart';
-import 'package:coinography/widgets/coin_home/coin_stat_card.dart';
-import 'package:coinography/widgets/coin_home/coin_home_header_price.dart';
+import 'package:coinography/widgets/coin_card_home/coin_stat_card.dart';
+import 'package:coinography/widgets/coin_card_home/coin_home_header_price.dart';
 
 /// Displays coin information and stats after coin card is pressed
 
@@ -117,7 +117,7 @@ class _CoinHomeState extends State<CoinHome> {
                 ),
                 const SizedBox(width: 5),
                 Text(
-                  /// Header  /////
+                  /// Header  ///////////////////////
                   '${_coinData?.id[0].toUpperCase()}${_coinData?.id.substring(1)}',
                   style:
                       const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
