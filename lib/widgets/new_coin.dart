@@ -96,7 +96,7 @@ class _NewCoinState extends State<NewCoin> {
                     controller: _coinTitleController,
                     focusNode: _coinTitleFocusNode,
                     decoration: const InputDecoration(
-                      label: Text('Coin "ID"'),
+                      label: Text('Coin "ID"(example: ethereum)'),
                     ),
                     onEditingComplete: () {
                       FocusScope.of(context).requestFocus(_amountFocusNode);
