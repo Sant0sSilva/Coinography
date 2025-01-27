@@ -13,7 +13,7 @@ class CoinStatCard extends StatelessWidget{
     }
     return SizedBox(
       width: double.infinity,
-      height: 200,
+      height: 175,
       child: Card(
         color: const Color.fromARGB(255, 6, 6, 50),
         margin: const EdgeInsets.all(16),

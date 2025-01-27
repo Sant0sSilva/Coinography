@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:coinography/models/coin_api.dart';
 import 'package:coinography/widgets/new_coin.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +32,7 @@ class _CoinsState extends State<Coins> {
   void initState() {
     super.initState();
     _fetchData();
+    // loadCoins();
   }
 
   ///Fetch coin data //////////////////////////////////
@@ -66,18 +69,20 @@ class _CoinsState extends State<Coins> {
     setState(() {
       _registeredCoins.add(coin);
     });
-
+    // await saveCoins();
     /// Fetches Data for new coin added otherwise it would return null
     _fetchData(coinTitle: coin.coinTitle);
   }
 
-  void _removeCoin(UserCoin coin) {
+  void _removeCoin(UserCoin coin) async {
     final coinIndex = _registeredCoins.indexOf(coin);
 
     setState(() {
       _registeredCoins.remove(coin);
       _coinData?.remove(coin.coinTitle);
     });
+
+    // await saveCoins();
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -93,6 +98,7 @@ class _CoinsState extends State<Coins> {
             setState(() {
               _registeredCoins.insert(coinIndex, coin);
             });
+            // saveCoins(); ///save to shared preferences
             _fetchData();
           },
         ),
@@ -103,16 +109,18 @@ class _CoinsState extends State<Coins> {
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return  Scaffold(
+      return Scaffold(
         body: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 4, 40, 188),
-                  Color.fromARGB(255, 1, 1, 14),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,),),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(255, 4, 40, 188),
+                Color.fromARGB(255, 1, 1, 14),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
           child: const Center(
             child: CircularProgressIndicator(),
           ),
@@ -157,11 +165,6 @@ class _CoinsState extends State<Coins> {
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            //   Color.fromARGB(255, 95, 95, 97),
-            //   Color.fromARGB(255, 0, 3, 11),
-            // ],
-            // begin: Alignment.topCenter,
-            // end: Alignment.bottomCenter,
           ),
         ),
         child: Column(

@@ -1,4 +1,5 @@
 import 'package:coinography/models/coin_api.dart';
+import 'package:coinography/widgets/coin_card_home/roi_calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:coinography/models/user_coin.dart';
 import 'package:coinography/api_callers/fetch_coin_data.dart';
@@ -28,7 +29,8 @@ class _CoinHomeState extends State<CoinHome> {
     super.initState();
     _fetchData();
   }
-/// Fetches additional data than is displayed on coin card
+
+  /// Fetches additional data than is displayed on coin card
   Future<void> _fetchData() async {
     try {
       final data = await fetchCoinData(widget.coin.coinTitle);
@@ -110,7 +112,9 @@ class _CoinHomeState extends State<CoinHome> {
               /// Header and LOGO /////////////////////////
               children: [
                 Image.network(
-                  _coinData!.image, /// image received from API
+                  _coinData!.image,
+
+                  /// image received from API
                   height: 50,
                   width: 50,
                   fit: BoxFit.cover,
@@ -119,23 +123,58 @@ class _CoinHomeState extends State<CoinHome> {
                 Text(
                   /// Header  ///////////////////////
                   '${_coinData?.id[0].toUpperCase()}${_coinData?.id.substring(1)}',
-                  style:
-                      const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 30),
                 )
               ],
             ),
           ),
-          /// Current price and 24 change in percent ////
-          CoinHomeHeaderPrice(coinData: _coinData),
+
+          /// Current price and 24h change in percent ////
+          CoinHomeHeaderPrice(
+            coinData: _coinData,
+          ),
 
           ///Line graph ////////////////////////////////////////////
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 1, 20, 5),
-            child: CoinLineGraph(coinData: _coinData),
+            child: CoinLineGraph(
+              coinData: _coinData,
+            ),
           ),
 
           /// Currency stats card //////////////////////////////
-          CoinStatCard(coinData: _coinData),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(30, 10, 1, 0),
+            child: Row(
+              children: [
+                Text(
+                  'Stats',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+          ),
+          CoinStatCard(
+            coinData: _coinData,
+          ),
+
+          ///ROI calculator
+          const Padding(
+            padding: EdgeInsets.fromLTRB(30, 10, 1, 0),
+            child: Row(
+              children: [
+                Text(
+                  'ROI Calculator',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+          ),
+          ROICalculator(
+            coinData: _coinData,
+            coin: widget.coin,
+          ),
         ],
       ),
     );

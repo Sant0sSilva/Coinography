@@ -15,5 +15,17 @@ class UserCoin {
   final String coinTitle; //name of coin/token
   final double amountUSD; //x amount of currency exchanged for y amount of coin
   final double tokenAmount; //current Price of coin in usd
+
+  Map<String, dynamic> toJson() => {
+    'coinTitle': coinTitle,
+    'amountUSD': amountUSD,
+    'tokenAmount': tokenAmount,
+  };
+
+  factory UserCoin.fromJson(Map<String, dynamic> json) => UserCoin(
+    coinTitle: json['coinTitle'],
+    amountUSD: json['amountUSD'],
+    tokenAmount: json['tokenAmount'],
+  );
 }
 
