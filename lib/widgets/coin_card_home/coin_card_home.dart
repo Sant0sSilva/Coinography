@@ -103,79 +103,81 @@ class _CoinHomeState extends State<CoinHome> {
           // end: Alignment.bottomCenter,
         ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              /// Header and LOGO /////////////////////////
-              children: [
-                Image.network(
-                  _coinData!.image,
-
-                  /// image received from API
-                  height: 50,
-                  width: 50,
-                  fit: BoxFit.cover,
-                ),
-                const SizedBox(width: 5),
-                Text(
-                  /// Header  ///////////////////////
-                  '${_coinData?.id[0].toUpperCase()}${_coinData?.id.substring(1)}',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 30),
-                )
-              ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                /// Header and LOGO /////////////////////////
+                children: [
+                  Image.network(
+                    _coinData!.image,
+        
+                    /// image received from API
+                    height: 50,
+                    width: 50,
+                    fit: BoxFit.cover,
+                  ),
+                  const SizedBox(width: 5),
+                  Text(
+                    /// Header  ///////////////////////
+                    '${_coinData?.id[0].toUpperCase()}${_coinData?.id.substring(1)}',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 30),
+                  )
+                ],
+              ),
             ),
-          ),
-
-          /// Current price and 24h change in percent ////
-          CoinHomeHeaderPrice(
-            coinData: _coinData,
-          ),
-
-          ///Line graph ////////////////////////////////////////////
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 1, 20, 5),
-            child: CoinLineGraph(
+        
+            /// Current price and 24h change in percent ////
+            CoinHomeHeaderPrice(
               coinData: _coinData,
             ),
-          ),
-
-          /// Currency stats card //////////////////////////////
-          const Padding(
-            padding: EdgeInsets.fromLTRB(30, 10, 1, 0),
-            child: Row(
-              children: [
-                Text(
-                  'Stats',
-                  style: TextStyle(fontSize: 20),
-                ),
-              ],
+        
+            ///Line graph ////////////////////////////////////////////
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 1, 20, 5),
+              child: CoinLineGraph(
+                coinData: _coinData,
+              ),
             ),
-          ),
-          CoinStatCard(
-            coinData: _coinData,
-          ),
-
-          ///ROI calculator
-          const Padding(
-            padding: EdgeInsets.fromLTRB(30, 10, 1, 0),
-            child: Row(
-              children: [
-                Text(
-                  'ROI Calculator',
-                  style: TextStyle(fontSize: 20),
-                ),
-              ],
+        
+            /// Currency stats card //////////////////////////////
+            const Padding(
+              padding: EdgeInsets.fromLTRB(30, 10, 1, 0),
+              child: Row(
+                children: [
+                  Text(
+                    'Stats',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
             ),
-          ),
-          ROICalculator(
-            coinData: _coinData,
-            coin: widget.coin,
-          ),
-        ],
+            CoinStatCard(
+              coinData: _coinData,
+            ),
+        
+            ///ROI calculator
+            const Padding(
+              padding: EdgeInsets.fromLTRB(30, 10, 1, 0),
+              child: Row(
+                children: [
+                  Text(
+                    'ROI Calculator',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+            ROICalculator(
+              coinData: _coinData,
+              coin: widget.coin,
+            ),
+          ],
+        ),
       ),
     );
   }
