@@ -32,8 +32,7 @@ class _CoinsState extends State<Coins> {
   void initState() {
     super.initState();
     _fetchData();
-    // loadCoins();
-  }
+     }
 
   ///Fetch coin data //////////////////////////////////
   Future<void> _fetchData({String? coinTitle}) async {
